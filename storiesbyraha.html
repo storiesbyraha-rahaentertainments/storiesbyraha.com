@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stories by Raha — Wedding Photography</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@200;300;400&family=Pinyon+Script&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #fdfcf9;
+      --blush: #f0e6dd;
+      --rose: #c9a090;
+      --dusty: #b08070;
+      --deep: #2c1f1a;
+      --muted: #7a6560;
+      --warm: #e8d8cc;
+      --accent: #c9a090;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--deep);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 1.8rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.5s, box-shadow 0.5s;
+    }
+    nav.scrolled {
+      background: rgba(253,252,249,0.94);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(201,160,144,0.2);
+    }
+    .nav-brand {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 1.9rem;
+      color: var(--white);
+      text-decoration: none;
+      line-height: 1;
+      transition: color 0.5s;
+    }
+    nav.scrolled .nav-brand { color: var(--deep); }
+    .nav-links { display: flex; gap: 3rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(253,252,249,0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--rose) !important; }
+    .nav-cta {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--deep);
+      background: var(--white);
+      padding: 0.7rem 1.8rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    nav.scrolled .nav-cta { background: var(--deep); color: var(--white); }
+    .nav-cta:hover { background: var(--dusty) !important; color: var(--white) !important; }
+
+    /* HERO */
+    #hero {
+      height: 100vh;
+      min-height: 700px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 120% 100% at 60% 40%, #e8c8b8 0%, #c9a898 25%, #a07060 55%, #5a3828 80%, #2c1f1a 100%);
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 70% at 30% 60%, rgba(253,252,249,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 75% 25%, rgba(253,252,249,0.08) 0%, transparent 50%);
+    }
+    .hero-bokeh { position: absolute; inset: 0; overflow: hidden; }
+    .bokeh {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(253,252,249,0.12);
+      filter: blur(40px);
+      animation: bokehFloat linear infinite;
+    }
+    .bokeh:nth-child(1) { width: 180px; height: 180px; top: 10%; left: 15%; animation-duration: 18s; }
+    .bokeh:nth-child(2) { width: 100px; height: 100px; top: 30%; left: 70%; animation-duration: 22s; animation-delay: -5s; }
+    .bokeh:nth-child(3) { width: 250px; height: 250px; top: 55%; left: 45%; animation-duration: 28s; animation-delay: -10s; }
+    .bokeh:nth-child(4) { width: 80px;  height: 80px;  top: 70%; left: 80%; animation-duration: 16s; animation-delay: -3s; }
+    .bokeh:nth-child(5) { width: 140px; height: 140px; top: 15%; left: 80%; animation-duration: 20s; animation-delay: -8s; }
+    @keyframes bokehFloat {
+      0%,100% { transform: translateY(0) scale(1); opacity: 0.5; }
+      50% { transform: translateY(-30px) scale(1.05); opacity: 0.8; }
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(44,31,26,0.85) 0%, rgba(44,31,26,0.3) 45%, transparent 70%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 5rem 6rem;
+      color: var(--white);
+      max-width: 900px;
+    }
+    .hero-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--warm);
+      opacity: 0.85;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      animation: fadeUp 1.2s 0.3s ease both;
+    }
+    .hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--warm); opacity: 0.6; }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: clamp(3.5rem, 8vw, 7.5rem);
+      line-height: 1.0;
+      margin-bottom: 2rem;
+      animation: fadeUp 1.2s 0.5s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--warm); display: block; }
+    .hero-sub {
+      font-weight: 200;
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      letter-spacing: 0.08em;
+      opacity: 0.75;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      line-height: 1.8;
+      animation: fadeUp 1.2s 0.7s ease both;
+    }
+    .hero-btns { display: flex; gap: 1.2rem; flex-wrap: wrap; animation: fadeUp 1.2s 0.9s ease both; }
+    .btn-primary {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--deep); background: var(--white);
+      padding: 1rem 2.2rem; text-decoration: none;
+      transition: background 0.3s, letter-spacing 0.3s;
+    }
+    .btn-primary:hover { background: var(--warm); letter-spacing: 0.4em; }
+    .btn-ghost {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--white); border: 1px solid rgba(253,252,249,0.4);
+      padding: 1rem 2.2rem; text-decoration: none;
+      transition: border-color 0.3s, letter-spacing 0.3s;
+    }
+    .btn-ghost:hover { border-color: var(--white); letter-spacing: 0.4em; }
+    .hero-scroll {
+      position: absolute; right: 5rem; bottom: 3.5rem;
+      writing-mode: vertical-rl;
+      display: flex; align-items: center; gap: 1rem;
+      color: rgba(253,252,249,0.45);
+      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+      z-index: 2;
+      animation: fadeIn 1.2s 1.2s ease both;
+    }
+    .hero-scroll::after { content: ''; width: 1px; height: 50px; background: linear-gradient(to bottom, rgba(253,252,249,0.4), transparent); }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+
+    /* INTRO STRIP */
+    .intro-strip {
+      background: var(--blush);
+      padding: 4rem 5rem;
+      display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    }
+    .intro-stat { text-align: center; }
+    .intro-stat-num { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2.8rem; color: var(--dusty); line-height: 1; }
+    .intro-stat-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
+    .intro-divider { width: 1px; height: 50px; background: var(--rose); opacity: 0.3; }
+
+    /* ABOUT */
+    #about {
+      padding: 9rem 5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: center;
+      max-width: 1280px; margin: 0 auto;
+    }
+    .about-visual-wrap { position: relative; }
+    .about-main-img {
+      width: 100%; aspect-ratio: 3/4;
+      background: linear-gradient(160deg, #d4b0a0 0%, #b08870 40%, #8a6050 70%, #5a3828 100%);
+      position: relative; overflow: hidden;
+    }
+    .about-main-img::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 40% 30%, rgba(253,252,249,0.15) 0%, transparent 60%); }
+    .about-main-img::after {
+      content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 55%; height: 65%;
+      background: rgba(44,31,26,0.5);
+      clip-path: polygon(30% 100%, 30% 45%, 38% 30%, 43% 10%, 48% 30%, 52% 10%, 57% 30%, 62% 45%, 70% 100%);
+      filter: blur(3px);
+    }
+    .about-secondary-img {
+      position: absolute; bottom: -3rem; right: -3rem;
+      width: 55%; aspect-ratio: 1;
+      background: linear-gradient(135deg, #e8c8b0 0%, #c0906a 100%);
+      border: 6px solid var(--white); overflow: hidden;
+    }
+    .about-secondary-img::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(253,252,249,0.12) 0%, transparent 60%); }
+    .about-label-float {
+      position: absolute; top: 2.5rem; left: -2.5rem;
+      background: var(--white); padding: 1.2rem 1.5rem;
+      box-shadow: 0 8px 40px rgba(44,31,26,0.12);
+    }
+    .about-label-float p { font-family: 'Pinyon Script', cursive; font-size: 1.5rem; color: var(--dusty); line-height: 1.3; }
+    .about-label-float span { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .section-eyebrow { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--rose); margin-bottom: 1.5rem; }
+    .section-heading { font-family: 'Playfair Display', serif; font-weight: 400; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.2; margin-bottom: 1.5rem; }
+    .section-heading em { font-style: italic; color: var(--dusty); }
+    .section-body { font-size: 0.93rem; line-height: 1.95; color: var(--muted); margin-bottom: 1.4rem; }
+    .signature { font-family: 'Pinyon Script', cursive; font-size: 2.2rem; color: var(--dusty); margin-top: 2rem; display: block; }
+
+    /* PORTFOLIO */
+    #portfolio { padding: 7rem 5rem; background: var(--deep); }
+    .portfolio-inner { max-width: 1280px; margin: 0 auto; }
+    .portfolio-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; color: var(--white); }
+    .portfolio-header .section-eyebrow { color: var(--rose); }
+    .portfolio-header .section-heading { color: var(--white); margin-bottom: 0; }
+    .portfolio-link { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rose); text-decoration: none; border-bottom: 1px solid rgba(201,160,144,0.3); padding-bottom: 0.3rem; transition: border-color 0.3s; }
+    .portfolio-link:hover { border-color: var(--rose); }
+    .gallery-mosaic { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(3, 220px); gap: 6px; }
+    .gp { overflow: hidden; position: relative; cursor: pointer; }
+    .gp::after { content: ''; position: absolute; inset: 0; background: rgba(44,31,26,0); transition: background 0.4s; }
+    .gp:hover::after { background: rgba(44,31,26,0.3); }
+    .gp-inner { width: 100%; height: 100%; transition: transform 0.7s ease; }
+    .gp:hover .gp-inner { transform: scale(1.06); }
+    .gp:nth-child(1) .gp-inner { background: linear-gradient(135deg, #d4b8a8 0%, #a07060 50%, #5a3828 100%); }
+    .gp:nth-child(2) .gp-inner { background: linear-gradient(160deg, #e0c8b0 0%, #c09070 60%, #7a4830 100%); }
+    .gp:nth-child(3) .gp-inner { background: linear-gradient(120deg, #2c2018 0%, #5a3828 40%, #8a5840 100%); }
+    .gp:nth-child(4) .gp-inner { background: linear-gradient(145deg, #c8b090 0%, #907050 50%, #4a2818 100%); }
+    .gp:nth-child(5) .gp-inner { background: linear-gradient(135deg, #e8d0b8 0%, #c08860 60%, #6a3820 100%); }
+    .gp:nth-child(6) .gp-inner { background: linear-gradient(160deg, #3a2820 0%, #6a4030 40%, #a07050 100%); }
+    .gp:nth-child(7) .gp-inner { background: linear-gradient(120deg, #d0b8a0 0%, #a07860 50%, #5a3020 100%); }
+    .gp:nth-child(1) { grid-column: 1/5;  grid-row: 1/3; }
+    .gp:nth-child(2) { grid-column: 5/8;  grid-row: 1/2; }
+    .gp:nth-child(3) { grid-column: 8/13; grid-row: 1/2; }
+    .gp:nth-child(4) { grid-column: 5/9;  grid-row: 2/4; }
+    .gp:nth-child(5) { grid-column: 9/13; grid-row: 2/3; }
+    .gp:nth-child(6) { grid-column: 1/5;  grid-row: 3/4; }
+    .gp:nth-child(7) { grid-column: 9/13; grid-row: 3/4; }
+    .gp-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(to top, rgba(44,31,26,0.7), transparent); color: var(--white); transform: translateY(100%); transition: transform 0.4s ease; z-index: 2; }
+    .gp:hover .gp-caption { transform: translateY(0); }
+    .gp-caption h4 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.2rem; }
+    .gp-caption p { font-size: 0.7rem; opacity: 0.7; letter-spacing: 0.1em; }
+
+    /* COLLECTIONS */
+    #collections { padding: 9rem 5rem; background: var(--white); }
+    .collections-inner { max-width: 1280px; margin: 0 auto; }
+    .collections-intro { text-align: center; max-width: 600px; margin: 0 auto 5rem; }
+    .collections-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--warm); }
+    .collection-card { background: var(--white); padding: 3.5rem 3rem; transition: background 0.35s; cursor: default; position: relative; overflow: hidden; }
+    .collection-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--rose); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+    .collection-card:hover::before { transform: scaleX(1); }
+    .collection-card:hover { background: var(--blush); }
+    .collection-icon { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; color: var(--rose); opacity: 0.4; line-height: 1; margin-bottom: 1.5rem; }
+    .collection-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.8rem; }
+    .collection-desc { font-size: 0.86rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.8rem; }
+    .collection-price { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; color: var(--dusty); }
+    .collection-price span { font-family: 'Jost', sans-serif; font-style: normal; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); vertical-align: super; }
+    .collection-includes { margin-top: 1.5rem; list-style: none; }
+    .collection-includes li { font-size: 0.8rem; color: var(--muted); padding: 0.45rem 0; border-bottom: 1px solid rgba(201,160,144,0.15); display: flex; align-items: center; gap: 0.7rem; }
+    .collection-includes li::before { content: '✦'; color: var(--rose); font-size: 0.5rem; flex-shrink: 0; }
+
+    /* EXPERIENCE */
+    #experience { background: var(--blush); padding: 9rem 5rem; }
+    .experience-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: center; }
+    .step { display: flex; gap: 2rem; padding: 2rem 0; border-bottom: 1px solid rgba(201,160,144,0.25); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; color: var(--rose); opacity: 0.5; flex-shrink: 0; width: 3rem; line-height: 1.2; }
+    .step-body h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .step-body p { font-size: 0.86rem; color: var(--muted); line-height: 1.8; }
+
+    /* TESTIMONIALS */
+    #testimonials { padding: 9rem 5rem; background: var(--deep); color: var(--white); }
+    .testimonials-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .testimonials-inner .section-eyebrow { color: var(--rose); }
+    .testimonial-carousel { margin-top: 4rem; min-height: 260px; }
+    .testimonial-slide { display: none; animation: fadeIn 0.6s ease; }
+    .testimonial-slide.active { display: block; }
+    .testimonial-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.7; opacity: 0.9; max-width: 750px; margin: 0 auto 2.5rem; position: relative; }
+    .testimonial-quote::before { content: '\201C'; font-size: 6rem; color: var(--rose); opacity: 0.2; position: absolute; top: -2rem; left: -2rem; line-height: 1; font-style: normal; }
+    .testimonial-couple { font-family: 'Pinyon Script', cursive; font-size: 1.6rem; color: var(--rose); }
+    .testimonial-date { font-size: 0.65rem; letter-spacing: 0.25em; opacity: 0.4; text-transform: uppercase; margin-top: 0.3rem; }
+    .carousel-dots { display: flex; justify-content: center; gap: 0.7rem; margin-top: 3rem; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(253,252,249,0.25); cursor: pointer; transition: background 0.3s, transform 0.3s; border: none; }
+    .dot.active { background: var(--rose); transform: scale(1.3); }
+
+    /* INQUIRY */
+    #inquiry { padding: 9rem 5rem; background: var(--white); }
+    .inquiry-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 7rem; align-items: start; }
+    .availability-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--blush); padding: 0.5rem 1rem; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+    .availability-dot { width: 7px; height: 7px; border-radius: 50%; background: #7a9e7a; }
+    .contact-detail { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--warm); font-size: 0.85rem; }
+    .contact-detail-label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--rose); min-width: 70px; }
+    .contact-detail a { color: var(--deep); text-decoration: none; }
+    .inquiry-form { display: flex; flex-direction: column; gap: 1.6rem; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+    .field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .field label { font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rose); }
+    .field input, .field select, .field textarea { background: transparent; border: none; border-bottom: 1px solid rgba(44,31,26,0.15); padding: 0.65rem 0; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.9rem; color: var(--deep); outline: none; transition: border-color 0.3s; resize: none; appearance: none; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--dusty); }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(44,31,26,0.35); }
+    .submit-btn { margin-top: 0.5rem; background: var(--deep); color: var(--white); border: none; padding: 1.1rem 2.5rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, letter-spacing 0.3s; align-self: flex-start; }
+    .submit-btn:hover { background: var(--dusty); letter-spacing: 0.45em; }
+
+    /* FOOTER */
+    footer { background: var(--deep); padding: 5rem 5rem 2.5rem; color: var(--white); }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 4rem; border-bottom: 1px solid rgba(253,252,249,0.08); }
+    .footer-brand-name { font-family: 'Pinyon Script', cursive; font-size: 2.5rem; color: var(--rose); display: block; margin-bottom: 1rem; }
+    .footer-tagline { font-size: 0.82rem; color: rgba(253,252,249,0.45); line-height: 1.8; margin-bottom: 1.5rem; }
+    .footer-social { display: flex; gap: 1rem; }
+    .footer-social a { width: 34px; height: 34px; border: 1px solid rgba(253,252,249,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: rgba(253,252,249,0.5); text-decoration: none; transition: border-color 0.3s, color 0.3s; }
+    .footer-social a:hover { border-color: var(--rose); color: var(--rose); }
+    .footer-col h5 { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rose); margin-bottom: 1.5rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.8rem; }
+    .footer-col ul li a { font-size: 0.82rem; color: rgba(253,252,249,0.45); text-decoration: none; transition: color 0.3s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: rgba(253,252,249,0.25); }
+    .footer-bottom a { color: rgba(253,252,249,0.3); text-decoration: none; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.85s ease, transform 0.85s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.12s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.32s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      nav { padding: 1.5rem 2rem; }
+      .nav-links, .nav-cta { display: none; }
+      .hero-content { padding: 0 2rem 5rem; }
+      .hero-scroll { display: none; }
+      #about { grid-template-columns: 1fr; gap: 3.5rem; padding: 6rem 2rem; }
+      .about-secondary-img, .about-label-float { display: none; }
+      .experience-inner, .inquiry-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+      #portfolio, #collections, #testimonials, #experience, #inquiry { padding-left: 2rem; padding-right: 2rem; }
+      .collections-grid { grid-template-columns: 1fr; }
+      .gallery-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gp { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 1; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      footer { padding: 3rem 2rem 2rem; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      .intro-strip { padding: 3rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="main-nav">
+    <a href="#hero" class="nav-brand">Stories by Raha</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#testimonials">Love Notes</a></li>
+    </ul>
+    <a href="#inquiry" class="nav-cta">Book a Date</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="hero-bokeh">
+        <div class="bokeh"></div><div class="bokeh"></div>
+        <div class="bokeh"></div><div class="bokeh"></div><div class="bokeh"></div>
+      </div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tag">Wedding Photography</p>
+      <h1 class="hero-title">Your love,<br><em>beautifully told.</em></h1>
+      <p class="hero-sub">Timeless, intimate photography that captures the real moments — the tears, the laughter, the glances no one else noticed.</p>
+      <div class="hero-btns">
+        <a href="#portfolio" class="btn-primary">View Portfolio</a>
+        <a href="#inquiry" class="btn-ghost">Book Your Date</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- STATS -->
+  <div class="intro-strip">
+    <div class="intro-stat reveal"><div class="intro-stat-num">300+</div><div class="intro-stat-label">Weddings Captured</div></div>
+    <div class="intro-divider"></div>
+    <div class="intro-stat reveal reveal-delay-1"><div class="intro-stat-num">8</div><div class="intro-stat-label">Years of Experience</div></div>
+    <div class="intro-divider"></div>
+    <div class="intro-stat reveal reveal-delay-2"><div class="intro-stat-num">15+</div><div class="intro-stat-label">Countries Shot In</div></div>
+    <div class="intro-divider"></div>
+    <div class="intro-stat reveal reveal-delay-3"><div class="intro-stat-num">&#x221E;</div><div class="intro-stat-label">Memories Made</div></div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-visual-wrap reveal">
+      <div class="about-main-img"></div>
+      <div class="about-secondary-img"></div>
+      <div class="about-label-float"><p>Raha</p><span>Lead Photographer</span></div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <p class="section-eyebrow">The Photographer</p>
+      <h2 class="section-heading">I believe every wedding<br>is a <em>story worth telling</em></h2>
+      <p class="section-body">Hi, I'm Raha — a wedding photographer with a passion for authentic moments. I don't direct, I observe. I don't pose, I wait. Because the best photographs happen when people forget the camera exists.</p>
+      <p class="section-body">My style is warm, cinematic, and deeply human. Whether it's an intimate elopement or a grand celebration, I bring the same quiet dedication to every frame.</p>
+      <a href="#inquiry" class="btn-primary" style="display:inline-block; margin-top:1rem;">Let's Connect</a>
+      <span class="signature">Raha</span>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="portfolio-inner">
+      <div class="portfolio-header reveal">
+        <div>
+          <p class="section-eyebrow">Portfolio</p>
+          <h2 class="section-heading">Moments <em>forever</em></h2>
+        </div>
+        <a href="#" class="portfolio-link">View full gallery &#8594;</a>
+      </div>
+      <div class="gallery-mosaic reveal">
+        <div class="gp"><div class="gp-inner"></div><div class="gp-caption"><h4>Sara &amp; James</h4><p>Florence, Italy &middot; 2024</p></div></div>
+        <div class="gp"><div class="gp-inner"></div><div class="gp-caption"><h4>First Dance</h4><p>Malibu, CA &middot; 2024</p></div></div>
+        <div class="gp"><div class="gp-inner"></div><div class="gp-caption"><h4>Leila &amp; Tom</h4><p>Santorini, Greece &middot; 2023</p></div></div>
+        <div class="gp"><div class="gp-inner"></div><div class="gp-caption"><h4>Garden Ceremony</h4><p>Cotswolds, UK &middot; 2024</p></div></div>
+        <div class="gp"><div class="gp-inner"></div><div class="gp-caption"><h4>Nadia &amp; Arash</h4><p>Dubai &middot; 2024</p></div></div>
+        <div class="gp"><div class="gp-inner"></div><div class="gp-caption"><h4>Golden Hour</h4><p>Tuscany &middot; 2023</p></div></div>
+        <div class="gp"><div class="gp-inner"></div><div class="gp-caption"><h4>Maya &amp; David</h4><p>New York &middot; 2025</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTIONS -->
+  <section id="collections">
+    <div class="collections-inner">
+      <div class="collections-intro reveal">
+        <p class="section-eyebrow">Collections</p>
+        <h2 class="section-heading">Choose your <em>story</em></h2>
+        <p class="section-body">Every love is unique. Every collection is crafted to honor that.</p>
+      </div>
+      <div class="collections-grid reveal">
+        <div class="collection-card">
+          <div class="collection-icon">I</div>
+          <h3 class="collection-name">The Elopement</h3>
+          <p class="collection-desc">Intimate, raw, and entirely yours. Perfect for couples who want to escape and celebrate just the two of them.</p>
+          <div class="collection-price"><span>from </span>1,800</div>
+          <ul class="collection-includes">
+            <li>4 hours of coverage</li><li>1 photographer</li><li>200+ edited images</li><li>Online gallery delivery</li>
+          </ul>
+        </div>
+        <div class="collection-card" style="border-top: 3px solid var(--rose);">
+          <div class="collection-icon">II</div>
+          <h3 class="collection-name">The Full Day</h3>
+          <p class="collection-desc">From morning preparations to the last dance — every chapter of your wedding day, documented with love.</p>
+          <div class="collection-price"><span>from </span>3,500</div>
+          <ul class="collection-includes">
+            <li>10 hours of coverage</li><li>Lead + second photographer</li><li>500+ edited images</li><li>Wedding film (short)</li><li>Printed album included</li>
+          </ul>
+        </div>
+        <div class="collection-card">
+          <div class="collection-icon">III</div>
+          <h3 class="collection-name">The Destination</h3>
+          <p class="collection-desc">Fly me anywhere. I'll capture your wedding against the backdrop of the world's most beautiful places.</p>
+          <div class="collection-price"><span>from </span>5,500</div>
+          <ul class="collection-includes">
+            <li>2 days of coverage</li><li>Full photography team</li><li>Engagement session</li><li>600+ edited images</li><li>Luxury heirloom album</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="experience-inner">
+      <div class="reveal">
+        <p class="section-eyebrow">The Experience</p>
+        <h2 class="section-heading">What it's like to <em>work with me</em></h2>
+        <p class="section-body">From the first message to the moment your gallery arrives, I want you to feel seen, heard, and genuinely excited. Here's how our journey together unfolds.</p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="step"><div class="step-num">01</div><div class="step-body"><h4>Inquiry &amp; Connection Call</h4><p>We start with a relaxed conversation — tell me about your day, your vision, your love story. No pressure, no forms.</p></div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-body"><h4>Booking &amp; Planning</h4><p>Once we're a match, we lock in your date and I'll guide you through every detail — timeline, locations, lighting.</p></div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-body"><h4>Your Wedding Day</h4><p>I blend into the background, staying close to the moments that matter. You won't even know I'm there — until you see the photos.</p></div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-body"><h4>Gallery Delivery</h4><p>Within 6–8 weeks, your beautifully edited gallery arrives — ready to relive forever.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="testimonials-inner">
+      <p class="section-eyebrow">Love Notes</p>
+      <h2 class="section-heading" style="color:var(--white);">What couples <em>say</em></h2>
+      <div class="testimonial-carousel">
+        <div class="testimonial-slide active">
+          <p class="testimonial-quote">Raha didn't just photograph our wedding — she captured the version of that day we would have forgotten. Looking at our photos, I feel everything again. Worth every penny and more.</p>
+          <p class="testimonial-couple">Sara &amp; James</p>
+          <p class="testimonial-date">Florence &middot; May 2024</p>
+        </div>
+        <div class="testimonial-slide">
+          <p class="testimonial-quote">We were nervous in front of cameras but Raha made us feel so comfortable. She has this incredible ability to disappear into the background and still get every single moment.</p>
+          <p class="testimonial-couple">Leila &amp; Tom</p>
+          <p class="testimonial-date">Santorini &middot; September 2023</p>
+        </div>
+        <div class="testimonial-slide">
+          <p class="testimonial-quote">Our gallery made us cry happy tears all over again. Raha's eye for light, for emotion, for the quiet in-between moments — it's unmatched. We tell every engaged couple about her.</p>
+          <p class="testimonial-couple">Nadia &amp; Arash</p>
+          <p class="testimonial-date">Dubai &middot; February 2024</p>
+        </div>
+      </div>
+      <div class="carousel-dots">
+        <button class="dot active" data-index="0"></button>
+        <button class="dot" data-index="1"></button>
+        <button class="dot" data-index="2"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- INQUIRY -->
+  <section id="inquiry">
+    <div class="inquiry-inner">
+      <div class="reveal">
+        <div class="availability-badge"><span class="availability-dot"></span> Booking 2025 &amp; 2026</div>
+        <p class="section-eyebrow">Get in Touch</p>
+        <h2 class="section-heading">Let's plan your <em>perfect day</em></h2>
+        <p class="section-body">Ready to chat? Fill in the form and I'll get back to you within 24 hours. I can't wait to hear your story.</p>
+        <div class="contact-detail"><span class="contact-detail-label">Email</span><a href="mailto:hello@storiesbyraha.com">hello@storiesbyraha.com</a></div>
+        <div class="contact-detail"><span class="contact-detail-label">Instagram</span><a href="#">@storiesbyraha</a></div>
+        <div class="contact-detail"><span class="contact-detail-label">Based in</span><span>Available worldwide</span></div>
+      </div>
+      <form class="inquiry-form reveal reveal-delay-1" onsubmit="return false;">
+        <div class="form-row-2">
+          <div class="field"><label>Your Name</label><input type="text" placeholder="First &amp; Last Name"/></div>
+          <div class="field"><label>Partner's Name</label><input type="text" placeholder="First &amp; Last Name"/></div>
+        </div>
+        <div class="field"><label>Email Address</label><input type="email" placeholder="hello@you.com"/></div>
+        <div class="form-row-2">
+          <div class="field"><label>Wedding Date</label><input type="date"/></div>
+          <div class="field"><label>Collection</label>
+            <select>
+              <option value="" disabled selected>Choose a collection</option>
+              <option>The Elopement</option><option>The Full Day</option><option>The Destination</option><option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>Venue / Location</label><input type="text" placeholder="Where is your wedding?"/></div>
+        <div class="field"><label>Tell Me Your Story</label><textarea rows="4" placeholder="How did you meet? What's your vision for the day?"></textarea></div>
+        <button type="submit" class="submit-btn">Send My Inquiry &#8594;</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <span class="footer-brand-name">Stories by Raha</span>
+        <p class="footer-tagline">Wedding photography for couples who believe their love story deserves to be told beautifully.</p>
+        <div class="footer-social"><a href="#">IG</a><a href="#">FB</a><a href="#">PI</a></div>
+      </div>
+      <div class="footer-col">
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="#about">About Raha</a></li><li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#collections">Collections</a></li><li><a href="#testimonials">Love Notes</a></li>
+          <li><a href="#inquiry">Book a Date</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Collections</h5>
+        <ul>
+          <li><a href="#">The Elopement</a></li><li><a href="#">The Full Day</a></li>
+          <li><a href="#">The Destination</a></li><li><a href="#">Engagement Sessions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:hello@storiesbyraha.com">hello@storiesbyraha.com</a></li>
+          <li><a href="#">@storiesbyraha</a></li><li><a href="#">Available Worldwide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2026 Stories by Raha. All rights reserved.</span>
+      <div style="display:flex; gap:2rem;"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.dot');
+    let current = 0, timer;
+    function goTo(i) {
+      slides[current].classList.remove('active'); dots[current].classList.remove('active');
+      current = i;
+      slides[current].classList.add('active'); dots[current].classList.add('active');
+    }
+    function autoplay() { timer = setInterval(() => goTo((current + 1) % slides.length), 5000); }
+    dots.forEach(d => d.addEventListener('click', () => { clearInterval(timer); goTo(+d.dataset.index); autoplay(); }));
+    autoplay();
+  </script>
+</body>
+</html>
