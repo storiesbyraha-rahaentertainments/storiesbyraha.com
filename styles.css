@@ -286,33 +286,40 @@ section { padding: clamp(64px, 10vw, 140px) 0; }
    PORTFOLIO — varied-size grid, not uniform cards
    ========================================================== */
 .portfolio__grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 14px;
+  columns: 3 320px;
+  column-gap: 14px;
   margin-top: 40px;
 }
-.portfolio__item {
-  position: relative;
-  background: none;
-  min-height: 0;
+
+.portfolio__item,
+.portfolio__item--wide,
+.portfolio__item--tall,
+.portfolio__item--half,
+.portfolio__item--third {
+  display: block;
+  width: 100%;
+  margin: 0 0 14px;
+  break-inside: avoid;
+}
+
+.portfolio__item img {
+  width: 100%;
+  height: auto !important;
+  object-fit: contain !important;
   display: block;
 }
-.portfolio__item span {
-  font-size: 0.78rem;
-  padding: 12px;
-  color: var(--ink);
-}
-.portfolio__item--wide { grid-column: span 4; }
-.portfolio__item--tall { grid-column: span 2; min-height: 0; }
-.portfolio__item--half { grid-column: span 3; }
-.portfolio__item--third { grid-column: span 2; }
 
 @media (max-width: 860px) {
-  .portfolio__grid { grid-template-columns: repeat(2, 1fr); }
-  .portfolio__item, .portfolio__item--wide, .portfolio__item--tall,
-  .portfolio__item--half, .portfolio__item--third { grid-column: span 2; min-height: 260px; }
+  .portfolio__grid {
+    columns: 2 260px;
+  }
 }
 
+@media (max-width: 600px) {
+  .portfolio__grid {
+    columns: 1;
+  }
+}
 /* ==========================================================
    SERVICES
    ========================================================== */
