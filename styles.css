@@ -291,10 +291,9 @@ section { padding: clamp(64px, 10vw, 140px) 0; }
 }
 .portfolio__item {
   position: relative;
-  background: repeating-linear-gradient(135deg, var(--paper-deep) 0 1px, transparent 1px 14px), var(--stone);
-  min-height: 220px;
-  display: flex;
-  align-items: flex-end;
+  background: none;
+  min-height: 0;
+  display: block;
 }
 .portfolio__item span {
   font-size: 0.78rem;
@@ -302,7 +301,7 @@ section { padding: clamp(64px, 10vw, 140px) 0; }
   color: var(--ink);
 }
 .portfolio__item--wide { grid-column: span 4; }
-.portfolio__item--tall { grid-column: span 2; min-height: 460px; }
+.portfolio__item--tall { grid-column: span 2; min-height: 0; }
 .portfolio__item--half { grid-column: span 3; }
 .portfolio__item--third { grid-column: span 2; }
 
