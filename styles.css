@@ -459,3 +459,17 @@ section { padding: clamp(64px, 10vw, 140px) 0; }
   object-fit: cover;
   display: block;
 }
+@media (min-width: 781px) {
+  .about__photo {
+    aspect-ratio: auto;
+    padding: 0;
+    background: none;
+  }
+
+  .about__photo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+}
