@@ -286,11 +286,11 @@ section { padding: clamp(64px, 10vw, 140px) 0; }
    PORTFOLIO — varied-size grid, not uniform cards
    ========================================================== */
 .portfolio__grid {
-  columns: 3 320px;
-  column-gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
   margin-top: 40px;
 }
-
 .portfolio__item,
 .portfolio__item--wide,
 .portfolio__item--tall,
@@ -298,26 +298,48 @@ section { padding: clamp(64px, 10vw, 140px) 0; }
 .portfolio__item--third {
   display: block;
   width: 100%;
-  margin: 0 0 14px;
-  break-inside: avoid;
+  height: 360px;
+  margin: 0;
+  overflow: hidden;
 }
 
 .portfolio__item img {
   width: 100%;
-  height: auto !important;
-  object-fit: contain !important;
+  height: 100% !important;
+  object-fit: cover !important;
   display: block;
 }
 
 @media (max-width: 860px) {
   .portfolio__grid {
-    columns: 2 260px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .portfolio__item,
+  .portfolio__item--wide,
+  .portfolio__item--tall,
+  .portfolio__item--half,
+  .portfolio__item--third {
+    height: 300px;
   }
 }
 
 @media (max-width: 600px) {
   .portfolio__grid {
-    columns: 1;
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio__item,
+  .portfolio__item--wide,
+  .portfolio__item--tall,
+  .portfolio__item--half,
+  .portfolio__item--third {
+    height: auto;
+  }
+
+  .portfolio__item img {
+    height: auto !important;
+    object-fit: contain !important;
   }
 }
   }
