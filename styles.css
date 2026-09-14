@@ -137,7 +137,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   }
   .nav__toggle { display: block; }
 }
-
+@media (max-width: 760px) {
+  .hero__frame {
+    background:
+      linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+      url("https://raw.githubusercontent.com/storiesbyraha-rahaentertainments/storiesbyraha.com/main/Assets/Hero%20Portrait%20%281%29.jpg") center center / cover no-repeat;
+  }
+}
 /* ==========================================================
    HERO
    ========================================================== */
