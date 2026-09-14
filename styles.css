@@ -153,7 +153,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   position: absolute;
   inset: 0;
   background:
-    background:
   linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
   url("https://raw.githubusercontent.com/storiesbyraha-rahaentertainments/storiesbyraha.com/main/Assets/Hero%20%281%29.jpg") center center / cover no-repeat;
   transform: scale(1.04);
