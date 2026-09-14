@@ -153,9 +153,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(135deg, var(--stone) 0 1px, transparent 1px 14px),
-    linear-gradient(180deg, var(--paper-deep), var(--stone));
-  opacity: 0;
+    background:
+  linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)),
+  url("https://raw.githubusercontent.com/storiesbyraha-rahaentertainments/storiesbyraha.com/main/Assets/Hero%20%281%29.jpg") center center / cover no-repeat;
   transform: scale(1.04);
   animation: heroIn 1.4s cubic-bezier(.2,.7,.2,1) forwards;
 }
@@ -163,16 +163,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   to { opacity: 1; transform: scale(1); }
 }
 .hero__frame::after {
-  content: 'Replace with a full-bleed photo or reel still — see README';
-  position: absolute;
-  bottom: 16px; right: 16px;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  color: var(--ink);
-  background: rgba(0,0,0,0.45);
-  padding: 4px 8px;
+  content: none;
 }
-.hero__content {
   position: relative;
   z-index: 2;
   max-width: 640px;
